@@ -18,7 +18,7 @@ RUN ./gradlew clean build
 ENV DATABASE_URL=jdbc:mariadb://mariadb/krampoline
 
 # jar 파일
-#COPY --from=builder /home/gradle/project/build/libs/albbaim-1.0.jar
+COPY --from=builder /home/gradle/project/build/libs/albbaim-1.0.jar
 
 # 빌드 결과 jar 파일을 실행
 CMD ["java", "-jar", "-Dspring.profiles.active=prod", "/home/gradle/project/build/libs/albbaim-1.0.jar"]

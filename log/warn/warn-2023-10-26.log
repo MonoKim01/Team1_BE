@@ -1,0 +1,10 @@
+[2023-10-26 14:22:08] [Test worker] [WARN ] [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor:223] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-10-26 14:22:09] [Test worker] [WARN ] [org.springframework.security.config.annotation.web.builders.WebSecurity.performBuild:333] - 
+
+********************************************************************
+**********        Security debugging is enabled.       *************
+**********    This may include sensitive information.  *************
+**********      Do not use in a production system!     *************
+********************************************************************
+
+

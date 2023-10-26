@@ -67,19 +67,15 @@ public class ScheduleService {
 			throw new CustomException("모든 요일에 대한 정보가 없습니다.", HttpStatus.BAD_REQUEST);
 		}
 
-		// group 찾기
 		Group group = userService.findGroupByUser(user);
 
-		// 스케줄 생성
 		Schedule schedule = Schedule.builder()
 			.group(group)
 			.build();
 		scheduleRepository.save(schedule);
 
-		// week 생성
 		Week week = weekService.createWeek(schedule, request.getWeekStartDate());
 
-		// 각 요일 정보(Day) 기입
 		List<RecruitSchedule.Request.DailySchedule> weeklyAmount = request.getWeeklyAmount();
 		List<Day> days = IntStream.range(1, weeklyAmount.size() + 1)
 			.mapToObj(dayOfWeek -> Day.builder()

@@ -47,6 +47,7 @@ class RecommendedWeeklyScheduleRepositoryTest extends BaseTest {
 	private RecommendedWorktimeApplyRepository recommendedWorktimeApplyRepository;
 	@Autowired
 	private EntityManager em;
+
 	public RecommendedWeeklyScheduleRepositoryTest(UserRepository userRepository, GroupRepository groupRepository,
 		NotificationRepository notificationRepository, DayRepository dayRepository, ApplyRepository applyRepository,
 		WeekRepository weekRepository, WorktimeRepository worktimeRepository, ScheduleRepository scheduleRepository,

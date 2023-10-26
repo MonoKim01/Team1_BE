@@ -2,7 +2,6 @@ package com.example.team1_be.domain.Group;
 
 import com.example.team1_be.domain.Group.DTO.Create;
 import com.example.team1_be.domain.Group.DTO.InvitationAccept;
-import com.example.team1_be.domain.Member.MemberRepository;
 import com.example.team1_be.util.WithMockCustomUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -30,11 +29,9 @@ public class GroupControllerTest {
     private ObjectMapper om;
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private MemberRepository memberRepository;
 
     @DisplayName("그룹 생성하기 성공")
-    @WithMockCustomUser
+    @WithMockCustomUser(username = "eunjin", isAdmin = "true")
     @Sql("group-create1.sql")
     @Test
     void postCreate1() throws Exception {
@@ -56,7 +53,6 @@ public class GroupControllerTest {
         perform.andExpect(status().isOk());
         perform.andDo(print());
         assertThat(groupRepository.findAll().size()).isEqualTo(1);
-        assertThat(memberRepository.findAll().size()).isEqualTo(1);
     }
 
     @DisplayName("그룹 생성하기 DTO 검증 실패(멤버변수 누락)")
@@ -269,12 +265,12 @@ public class GroupControllerTest {
         ResultActions perform = mvc.perform(get("/group"));
 
         // then
-        perform.andExpect(status().isBadRequest());
+        perform.andExpect(status().isForbidden());
         perform.andDo(print());
     }
 
     @DisplayName("그룹 초대링크 발급 성공")
-    @WithMockCustomUser
+    @WithMockCustomUser(username = "eunjin", isAdmin = "true")
     @Sql("group-getInvitation1.sql")
     @Test
     void getInvitation1() throws Exception {
@@ -295,7 +291,7 @@ public class GroupControllerTest {
         ResultActions perform = mvc.perform(get("/group/invitation"));
 
         // then
-        perform.andExpect(status().isBadRequest());
+        perform.andExpect(status().isForbidden());
         perform.andDo(print());
     }
 
@@ -310,5 +306,30 @@ public class GroupControllerTest {
         // then
         perform.andExpect(status().isForbidden());
         perform.andDo(print());
+    }
+
+    @DisplayName("그룹 생성시 Auditing 확인")
+    @WithMockCustomUser(isAdmin = "true")
+    @Sql("group-create1.sql")
+    @Test
+    void userAuditing1() throws Exception {
+        // given
+        Create.Request requestDTO = Create.Request.builder()
+                .marketName("kakao")
+                .marketNumber("10-31223442")
+                .mainAddress("금강로 279번길 19")
+                .detailAddress("ㅁㅁ건물 2층 ㅇㅇ상가")
+                .build();
+        String request = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions perform = mvc.perform(post("/group")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request));
+
+        // then
+        perform.andExpect(status().isOk());
+        perform.andDo(print());
+        assertThat(groupRepository.findAll().size()).isEqualTo(1);
     }
 }

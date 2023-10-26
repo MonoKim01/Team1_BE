@@ -1,7 +1,7 @@
 package com.example.team1_be.domain.Group.Invite;
 
 import com.example.team1_be.domain.Group.Group;
-import com.example.team1_be.utils.BaseEntity;
+import com.example.team1_be.utils.audit.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @RequiredArgsConstructor
 @Getter
-@Table
+@Table(indexes = @Index(name = "groupInviteCode", columnList = "code", unique = true))
 public class Invite extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class Invite extends BaseEntity {
     private LocalDateTime renewedAt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @NotNull
+    @JoinColumn(name = "group_id")
     private Group group;
 
     @Builder

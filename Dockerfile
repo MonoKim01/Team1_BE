@@ -1,5 +1,5 @@
 # gradle:8.4.0-jdk11 이미지를 기반으로 함
-FROM krmp-d2hub-idock.9rum.cc/goorm/gradle:jdk11-alpine
+FROM krmp-d2hub-idock.9rum.cc/goorm/gradle:8.4.0-jdk11-alpine
 
 # 작업 디렉토리 설정
 WORKDIR /home/gradle/project

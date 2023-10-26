@@ -1,8 +1,5 @@
 FROM gradle:7.3.1-jdk17
 
-# 작업 디렉토리 설정
-WORKDIR project
-
 # Spring 소스 코드를 이미지에 복사
 COPY . .
 

@@ -39,7 +39,3 @@ dependencies {
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
